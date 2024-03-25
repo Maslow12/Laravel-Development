@@ -1,0 +1,19 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Auth JWT by: Sebastian Yusti",
+        "version": "0.1"
+    },
+    "paths": {
+        "users": {
+            "get": {
+                "operationId": "35b637a54416bc625222571630899e3d",
+                "responses": {
+                    "200": {
+                        "description": "Display a listing of users."
+                    }
+                }
+            }
+        }
+    }
+}

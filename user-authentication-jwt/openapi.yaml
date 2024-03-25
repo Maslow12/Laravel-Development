@@ -1,0 +1,17 @@
+openapi: 3.0.0
+info:
+  title: 'API Auth JWT by: Sebastian Yusti'
+  version: '0.1'
+paths:
+  auth:
+    get:
+      operationId: b1376e42ca905bc496ed6ee39d41404e
+      responses:
+        '200':
+          description: Auth
+  users:
+    get:
+      operationId: 35b637a54416bc625222571630899e3d
+      responses:
+        '200':
+          description: 'Display a listing of users.'
