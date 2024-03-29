@@ -15,14 +15,13 @@ class UserIsLogged
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle($request, Closure $next)
     {
-        $logged_user = Auth::user();
-        $route = $request->path();
-        if (!$logged_user && $route == "sign-in") {
-            return $next($request);
-        } else {
+        $user = Auth::user();
+        if (!Auth::check() || !$user) {
             return redirect('sign-in');
+        }else {
+            return $next($request);
         }
     }
 }

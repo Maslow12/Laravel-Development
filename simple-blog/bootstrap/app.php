@@ -3,7 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\UserIsLogged;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,7 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append(UserIsLogged::class);
+        //$middleware->redirectGuestsTo('sign-in');
+        //$middleware->redirectGuestsTo(fn (Request $request) => route('sign-in'));
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
