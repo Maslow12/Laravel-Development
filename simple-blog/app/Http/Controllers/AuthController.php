@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -18,7 +19,6 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect('/');
         }
- 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
@@ -31,7 +31,23 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function register(){
-        return;
+    public function register(Request $request){
+        return view('auth/register');
+    }
+
+    public function create(Request $request){
+        $user = User::create($request->all());
+        if ($user){
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+        
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect('/');
+        }}else{
+            return back()->withErrors(["Credencial errors"]);
+        }
     }
 }
