@@ -1,0 +1,43 @@
+version: '2.3'
+
+services:
+  mysql:
+    restart: always
+    image: mariadb:10.3
+    container_name: mariadb
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./store/:/var/lib/mysql
+    mem_limit: 512m
+    networks:
+      - mysqlnetwork
+    environment:
+      - MYSQL_ROOT_PASSWORD={{MYSQL_PASSWORD}}
+      - MYSQL_DATABASE={{ENVIROMENT}}
+      - MYSQL_USER={{MYSQL_USER}}
+      - MYSQL_PASSWORD={{MYSQL_USER_PASSWORD}}
+
+  redis-server:
+    restart: always
+    image: redis:4.0
+    container_name: redis-server
+    command: /bin/bash -c 'redis-server --appendonly yes'
+    sysctls:
+      - net.core.somaxconn=65535
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./redis:/data
+    mem_limit: 96m
+    networks:
+      - mysqlnetwork
+volumes:
+  mysql:
+    driver: local
+  redis:
+    driver: local
+
+networks:
+  mysqlnetwork:
+    driver: bridge
